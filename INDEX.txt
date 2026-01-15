@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Canteras del Mundo: Diagnóstico IA</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Config & Styles -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+            color: #1e293b; /* Slate 800 */
+        }
+
+        /* Palette Definition (Vibrant Tech) */
+        :root {
+            --color-primary: #2563EB; /* Blue 600 */
+            --color-secondary: #0D9488; /* Teal 600 */
+            --color-accent: #F59E0B; /* Amber 500 */
+            --color-dark: #0f172a; /* Slate 900 */
+        }
+
+        /* Chart Container Rules */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Max width constraint */
+            height: 350px;    /* Base height */
+            max-height: 400px; /* Max height constraint */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        /* Timeline Styles (No SVG) */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #e2e8f0;
+            transform: translateX(-50%);
+        }
+        
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #2563EB;
+            border: 4px solid #fff;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+    
+    <!-- 
+        NARRATIVE PLAN:
+        1. Header: Establish the mission (Transformation via AI).
+        2. Diagnosis: Use cards to show the "Pain Points" found in the report (Financial, Operational, etc.).
+        3. Data Viz: Show the "Maturity Map" using a Radar Chart (Comparing areas) and Donut (Overall Score).
+        4. Strategy: Explain the 3-Pronged Approach (Microsoft, Google, ChatGPT) using Cards.
+        5. Roadmap: Vertical timeline for "Next Steps".
+    -->
+    
+    <!-- 
+        CHART SELECTION JUSTIFICATION (NO SVG):
+        1. Maturity by Area -> Radar Chart (Chart.js): Best for comparing multiple multivariate data points (Department Scores) on a common scale (1-5).
+        2. Average Score -> Donut Chart (Chart.js): Effectively communicates a "part to whole" or "progress" metric (2.7 out of 5).
+        3. Timeline -> HTML/CSS: Best for sequential text/process without needing complex graphics.
+    -->
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-slate-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900/30 rounded-full">
+                Informe Canteras del Mundo
+            </div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
+                Diagnóstico y Oportunidades de IA
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto">
+                Un marco estratégico para transformar cuellos de botella en ventajas competitivas y potenciar la capacidad analítica de los líderes de Grupo CR.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
+
+        <!-- SECTION 1: KEY FINDINGS & DIAGNOSIS -->
+        <section>
+            <div class="mb-8 border-l-4 border-amber-500 pl-4">
+                <h2 class="text-2xl font-bold text-slate-800">Hallazgos Principales</h2>
+                <p class="text-slate-600 mt-2">
+                    El relevamiento identificó cuatro áreas críticas donde la fricción operativa limita el crecimiento estratégico.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-red-500 transition hover:shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl mr-3">📉</span>
+                        <h3 class="text-lg font-bold text-slate-800">Fricción en Reportería</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-3">
+                        Los gerentes dedican tiempo excesivo a descargar y cruzar datos crudos de SAP y Amina manualmente.
+                    </p>
+                    <div class="bg-red-50 text-red-700 px-3 py-2 rounded text-xs font-semibold">
+                        Consecuencia: Toma de decisiones reactiva.
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-orange-500 transition hover:shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl mr-3">💰</span>
+                        <h3 class="text-lg font-bold text-slate-800">Riesgo Financiero</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-3">
+                        Proceso ineficiente y manual en el seguimiento de notas de crédito sin asociación automática.
+                    </p>
+                    <div class="bg-orange-50 text-orange-700 px-3 py-2 rounded text-xs font-semibold">
+                        Consecuencia: Impacto directo en flujo de caja.
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-yellow-500 transition hover:shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl mr-3">🧠</span>
+                        <h3 class="text-lg font-bold text-slate-800">Conocimiento Tácito</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-3">
+                        En logística, la planificación de carga depende casi exclusivamente de la memoria de una persona.
+                    </p>
+                    <div class="bg-yellow-50 text-yellow-700 px-3 py-2 rounded text-xs font-semibold">
+                        Consecuencia: Alto riesgo operativo.
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-blue-500 transition hover:shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl mr-3">📝</span>
+                        <h3 class="text-lg font-bold text-slate-800">Higiene Operativa</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-3">
+                        Las minutas de reunión son informales y el seguimiento se diluye en WhatsApp o correos.
+                    </p>
+                    <div class="bg-blue-50 text-blue-700 px-3 py-2 rounded text-xs font-semibold">
+                        Consecuencia: Pérdida de trazabilidad.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: AI MATURITY MAP (DATA VIZ) -->
+        <section class="bg-slate-50 rounded-2xl p-0 sm:p-8">
+            <div class="mb-8 border-l-4 border-blue-600 pl-4">
+                <h2 class="text-2xl font-bold text-slate-800">Mapa de Madurez de IA</h2>
+                <p class="text-slate-600 mt-2">
+                    Evaluación del "punto de partida" (Escala 1 a 5) basada en Cultura, Datos y Procesos. El promedio actual es <strong>2.7 (Exploración Activa)</strong>.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <!-- Col 1: Radar Chart (Detailed Breakdown) -->
+                <div class="lg:col-span-2 bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-center text-sm font-semibold text-slate-500 mb-4 uppercase tracking-wide">Madurez por Área Operativa</h3>
+                    <div class="chart-container">
+                        <canvas id="maturityRadarChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-slate-400 mt-2">Comparativa de preparación para adopción de IA.</p>
+                </div>
+
+                <!-- Col 2: Donut Chart & Key Stat -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col items-center justify-center h-full">
+                    <h3 class="text-center text-sm font-semibold text-slate-500 mb-4 uppercase tracking-wide">Promedio Global</h3>
+                    <div class="chart-container" style="height: 250px; max-height: 250px;">
+                        <canvas id="averageScoreChart"></canvas>
+                    </div>
+                    <div class="text-center mt-4">
+                        <div class="text-4xl font-bold text-blue-600">2.7</div>
+                        <div class="text-sm text-slate-500">Estado: Transición</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Context Table -->
+            <div class="mt-8 overflow-x-auto">
+                <table class="min-w-full text-sm text-left text-slate-600 bg-white rounded-lg shadow overflow-hidden">
+                    <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Área</th>
+                            <th scope="col" class="px-6 py-3">Nivel</th>
+                            <th scope="col" class="px-6 py-3">Desafío Inmediato</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b hover:bg-slate-50">
+                            <td class="px-6 py-4 font-medium">Administración</td>
+                            <td class="px-6 py-4 text-blue-600 font-bold">3.0</td>
+                            <td class="px-6 py-4">Copilot en Excel para reportes de rentabilidad.</td>
+                        </tr>
+                        <tr class="border-b hover:bg-slate-50">
+                            <td class="px-6 py-4 font-medium">Comercial</td>
+                            <td class="px-6 py-4 text-blue-600 font-bold">3.0</td>
+                            <td class="px-6 py-4">NotebookLM como base de conocimiento de ventas.</td>
+                        </tr>
+                        <tr class="border-b hover:bg-slate-50">
+                            <td class="px-6 py-4 font-medium">Dirección</td>
+                            <td class="px-6 py-4 text-blue-600 font-bold">3.0</td>
+                            <td class="px-6 py-4">Copilot en Teams para minutas y OKRs.</td>
+                        </tr>
+                        <tr class="border-b hover:bg-slate-50">
+                            <td class="px-6 py-4 font-medium">Logística</td>
+                            <td class="px-6 py-4 text-amber-600 font-bold">2.5</td>
+                            <td class="px-6 py-4">Digitalizar "reglas de carga" (Adiós memoria humana).</td>
+                        </tr>
+                        <tr class="border-b hover:bg-slate-50">
+                            <td class="px-6 py-4 font-medium">Operaciones</td>
+                            <td class="px-6 py-4 text-red-500 font-bold">2.0</td>
+                            <td class="px-6 py-4">Centralizar repositorio de proyectos (PDFs) en Teams.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION 3: STRATEGIC ARCHITECTURE -->
+        <section>
+            <div class="mb-8 border-l-4 border-teal-500 pl-4">
+                <h2 class="text-2xl font-bold text-slate-800">Estrategia Tecnológica Híbrida</h2>
+                <p class="text-slate-600 mt-2">
+                    Se prioriza minimizar el "Costo del Cambio" manteniendo el ecosistema Microsoft, integrando herramientas específicas de Google para análisis documental avanzado.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Pillar 1 -->
+                <div class="bg-slate-800 text-white rounded-xl p-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-blue-500 rounded-full opacity-20"></div>
+                    <div class="text-3xl mb-4">⚙️</div>
+                    <h3 class="text-xl font-bold mb-2">Microsoft Copilot</h3>
+                    <p class="text-blue-200 text-xs font-semibold mb-4 uppercase tracking-wider">Eje de Producción</p>
+                    <ul class="text-sm space-y-2 text-slate-300">
+                        <li>• Integrado en Teams, Excel y Outlook.</li>
+                        <li>• Análisis de datos financieros seguro.</li>
+                        <li>• Gestión de minutas automática.</li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-md relative">
+                    <div class="text-3xl mb-4">🔬</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Google NotebookLM</h3>
+                    <p class="text-teal-600 text-xs font-semibold mb-4 uppercase tracking-wider">Analista de Investigación</p>
+                    <ul class="text-sm space-y-2 text-slate-600">
+                        <li>• Análisis masivo de PDFs (RAG).</li>
+                        <li>• Ideal para OTs y documentación técnica.</li>
+                        <li>• Síntesis superior de textos largos.</li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-md relative">
+                    <div class="text-3xl mb-4">🧪</div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">ChatGPT Business</h3>
+                    <p class="text-purple-600 text-xs font-semibold mb-4 uppercase tracking-wider">Laboratorio I+D</p>
+                    <ul class="text-sm space-y-2 text-slate-600">
+                        <li>• Prototipado rápido de ideas.</li>
+                        <li>• Tareas de Marketing y redacción creativa.</li>
+                        <li>• Entorno sandbox seguro.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: ROADMAP / NEXT STEPS -->
+        <section class="bg-white rounded-2xl shadow-lg p-8 border border-slate-100">
+            <h2 class="text-2xl font-bold text-center text-slate-800 mb-10">Acciones Inmediatas</h2>
+            
+            <div class="relative max-w-3xl mx-auto">
+                <!-- Vertical Line -->
+                <div class="timeline-line"></div>
+
+                <!-- Step 1 -->
+                <div class="relative z-10 mb-12 flex flex-col sm:flex-row items-center">
+                    <div class="flex-1 text-center sm:text-right px-4 mb-4 sm:mb-0">
+                        <h4 class="text-lg font-bold text-slate-800">Habilitación Infraestructura</h4>
+                        <p class="text-sm text-slate-500">Adquisición de licencias Copilot y cuentas Google Corporativas.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="flex-1 px-4"></div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative z-10 mb-12 flex flex-col sm:flex-row items-center">
+                    <div class="flex-1 px-4 mb-4 sm:mb-0 hidden sm:block"></div>
+                    <div class="timeline-dot bg-teal-500 border-white"></div>
+                    <div class="flex-1 text-center sm:text-left px-4">
+                        <h4 class="text-lg font-bold text-slate-800">Higiene Documental</h4>
+                        <p class="text-sm text-slate-500">Limpieza y estructuración de carpetas en Teams para alimentar la IA.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative z-10 mb-12 flex flex-col sm:flex-row items-center">
+                    <div class="flex-1 text-center sm:text-right px-4 mb-4 sm:mb-0">
+                        <h4 class="text-lg font-bold text-slate-800">Capacitación Focalizada</h4>
+                        <p class="text-sm text-slate-500">Sesiones prácticas basadas en casos de uso reales por área.</p>
+                    </div>
+                    <div class="timeline-dot bg-amber-500 border-white"></div>
+                    <div class="flex-1 px-4"></div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative z-10 flex flex-col sm:flex-row items-center">
+                    <div class="flex-1 px-4 mb-4 sm:mb-0 hidden sm:block"></div>
+                    <div class="timeline-dot bg-slate-800 border-white"></div>
+                    <div class="flex-1 text-center sm:text-left px-4">
+                        <h4 class="text-lg font-bold text-slate-800">Política de "Uso Seguro"</h4>
+                        <p class="text-sm text-slate-500">Documentación de gobernanza y manual de buenas prácticas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-slate-400 text-sm py-8 border-t border-slate-200 mt-12">
+            <p>&copy; 2024 Grupo CR - Documento Confidencial</p>
+        </footer>
+
+    </main>
+
+    <!-- CHART.JS CONFIGURATION -->
+    <script>
+        // --- UTILITY: Label Wrapping Function (16 chars) ---
+        function wrapLabel(str, maxChars) {
+            if (str.length <= maxChars) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + 1 + words[i].length <= maxChars) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // --- GLOBAL: Tooltip Configuration ---
+        Chart.defaults.plugins.tooltip.callbacks.title = function(tooltipItems) {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        };
+
+        // --- CHART 1: Maturity Radar Chart ---
+        const ctxRadar = document.getElementById('maturityRadarChart').getContext('2d');
+        const labelsRaw = ['Administración', 'Comercial', 'Dirección', 'Logística', 'RRHH', 'Operaciones'];
+        const labelsWrapped = labelsRaw.map(l => wrapLabel(l, 16));
+
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: labelsWrapped,
+                datasets: [{
+                    label: 'Nivel de Madurez Actual',
+                    data: [3.0, 3.0, 3.0, 2.5, 2.5, 2.0],
+                    fill: true,
+                    backgroundColor: 'rgba(37, 99, 235, 0.2)', // Blue 600
+                    borderColor: 'rgb(37, 99, 235)',
+                    pointBackgroundColor: 'rgb(37, 99, 235)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(37, 99, 235)'
+                },
+                {
+                    label: 'Meta Ideal (Nivel 5)',
+                    data: [5, 5, 5, 5, 5, 5],
+                    fill: false,
+                    borderColor: 'rgba(203, 213, 225, 0.5)', // Slate 300
+                    borderDash: [5, 5],
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: {
+                    line: { borderWidth: 3 }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0,0,0,0.1)' },
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        pointLabels: {
+                            font: { size: 12, family: "'Inter', sans-serif", weight: '600' },
+                            color: '#475569'
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 5,
+                        ticks: { stepSize: 1, backdropColor: 'transparent' }
+                    }
+                },
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // --- CHART 2: Average Score Donut ---
+        const ctxDonut = document.getElementById('averageScoreChart').getContext('2d');
+        
+        new Chart(ctxDonut, {
+            type: 'doughnut',
+            data: {
+                labels: ['Madurez Alcanzada', 'Brecha Restante'],
+                datasets: [{
+                    data: [2.7, 2.3], // 2.7 vs (5 - 2.7)
+                    backgroundColor: [
+                        '#2563EB', // Blue 600
+                        '#E2E8F0'  // Slate 200
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
